@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400&family=Dancing+Script:wght@400&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <title>Feliz Cumpleaños Mi Ángela</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <style>
+        /* Estilo general para el body */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f7a7c7, #a5d8a5); /* Degradado rosa a verde suave */
+            color: #3a4d2f;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Estilo de la tarjeta de cumpleaños */
+        .card {
+            position: relative;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* Estilos de la cabecera */
+        .header h1, .header h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #f36f6f;
+        }
+
+        .date {
+            font-size: 1.2rem;
+            color: #f36f6f;
+        }
+
+        /* Estilos para las fotos */
+        .photo-frame {
+            position: relative;
+            display: inline-block;
+            width: 160px;
+            height: 160px;
+            margin-top: 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Aseguramos que las imágenes cubran bien el círculo */
+        .photo-frame img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Transición para cambiar entre fotos */
+        .photo-frame img:nth-child(2) {
+            opacity: 0;
+        }
+
+        .photo-frame:hover img:nth-child(1) {
+            opacity: 0;
+        }
+
+        .photo-frame:hover img:nth-child(2) {
+            opacity: 1;
+        }
+
+        /* Estilos del mensaje */
+        .message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff7f50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff4f00;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff4f00;
+        }
+
+        /* Música de fondo */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+
+        .music-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Contenedor de partículas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Partícula individual */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            background-color: rgba(255, 255, 255, 0.8); /* Blanco suave para las partículas */
+            animation-name: floatUp;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        /* Animación que hace subir las partículas */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+                width: 90%;
+                font-size: 1rem;
+            }
+
+            .photo-frame {
+                width: 120px;
+                height: 120px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1>Feliz Cumpleaños</h1>
+            <h2>MI ÁNGELA</h2>
+            <div class="date">30 de Agosto, 2025</div>
+        </div>
+        
+        <!-- Colocando las fotos antes del mensaje -->
+        <div class="photo-frame">
+            <img src="1.jpg" alt="Ángela" />
+            <img src="2.jpg" alt="Ángela" /> <!-- Segunda foto -->
+        </div>
+        
+        <p class="message">
+            En este día tan especial, quiero que sepas lo increíble que eres y lo mucho que te quiero.<br><br>
+            Eres grandiosa en todos los sentidos: una persona llena de luz, con un corazón noble y un alma espléndida que ilumina la vida.<br><br>
+            Tu fuerza, tu bondad y tu sonrisa sincera son un regalo que valoro cada día. Que este nuevo año te traiga tanta alegría, amor y sueños cumplidos como los que tú inspiras en mí.<br><br>
+            Gracias por ser ese ser único y maravilloso que llena de magia cada instante. ¡Feliz cumpleaños, mi querida Angela!
+        </p>
+        
+        <button class="btn" id="openLetter">Abrir Carta Especial</button>
+        
+        <div class="signature">Gonzalo</div>
+    </div>
+    
+    <div class="modal" id="letterModal">
+        <span class="close-btn" id="closeBtn">×</span>
+        <div class="modal-content">
+            <h2 class="letter-title">Para Ángela</h2>
+            <div class="letter-content">
+                ¡Mi querida Angela, FELIZ CUMPLEAÑOS! 💖
+<p class="message">
+Hoy no es un día cualquiera, hoy celebramos <strong>tu existencia</strong>, el día en que el mundo fue <strong>bendecido</strong> con la llegada de una persona tan <strong>maravillosa</strong>, que con su <strong>luz</strong> ha transformado todo a su alrededor.  
+Este día es un <strong>recordatorio</strong> de lo afortunado que soy de haberte encontrado, y de cómo tu <strong>presencia</strong> ha hecho que mi vida sea infinitamente más <strong>rica</strong>, más <strong>hermosa</strong> y llena de <strong>significado</strong>.
+
+Desde el primer momento en que nos cruzamos, supe que algo <strong>extraordinario</strong> estaba por comenzar. Cada día a tu lado es un <strong>regalo</strong>, y hoy, en tu <strong>CUMPLEAÑO</strong>, quiero que sientas lo profundo que eres para mí.  
+Este día es mucho más que una <strong>celebración</strong> de tu nacimiento, es la oportunidad perfecta para <strong>recordarte</strong> lo <strong>increíblemente valiosa</strong> que eres: no solo para mí, sino para todos los que te conocen.  
+La <strong>bondad</strong> que irradias, no tiene comparación.
+
+Te admiro no solo por tu <strong>increíble belleza exterior</strong>, sino por esa belleza que llevas en el <strong>corazón</strong>. Tu <strong>sonrisa</strong> tiene el poder de iluminar cualquier habitación, y tu <strong>fuerza</strong> y <strong>determinación</strong> son una <strong>inspiración constante</strong>. Siempre estás ahí, con una <strong>palabra de aliento</strong>, una mirada llena de <strong>amor</strong> y una <strong>energía</strong> que me hace sentir que todo es posible. 
+
+Hoy celebro a la <strong>mujer valiente</strong> que eres, capaz de <strong>superar cualquier obstáculo</strong>, con una <strong>gracia</strong> que pocos poseen. Celebro la <strong>hija</strong>, la <strong>compañera</strong> y cómo en cada uno de esos roles, logras hacer sentir que tenemos la suerte de estar cerca de ti.
+
+Mi querida <strong>Ángela</strong>, me <strong>bebita</strong>, mi <strong>princesita</strong>, quiero que hoy te sientas más <strong>especial</strong> que nunca, porque <strong>lo eres</strong>. Que este nuevo año de vida te traiga todo lo que tu <strong>corazón</strong> desea, y mucho más.  
+Quiero ser el <strong>testigo</strong> de todos tus <strong>sueños cumplidos</strong>, y juntos escribir nuevos <strong>capítulos</strong> en esta historia tan <strong>hermosa</strong> que estamos construyendo.  
+Que cada día esté lleno de momentos que te hagan <strong>sonreír</strong>, que cada segundo sea tan <strong>brillante</strong> como tu <strong>alma</strong>, y que nunca falte en tu vida el <strong>amor</strong>, la <strong>felicidad</strong> y la <strong>paz</strong> que yo hasta mi <strong>último aliento</strong> de vida te lo daré.
+
+<strong>Feliz cumpleaños</strong>, mi Ángela, la persona que hace que mi mundo sea <strong>mejor</strong> solo con existir. Que la vida te regale u otorgue todo lo que es: <strong>Pureza</strong>, <strong>luz</strong>, <strong>cariño</strong> y <strong>alegría</strong>.  
+Hoy te celebro, pero <strong>cada día te celebro</strong>, porque eres el <strong>mayor regalo</strong> que me ha dado la vida.
+
+Con todo mi <strong>cariño</strong> y más, te quiero ♥  
+te lo desea tu  
+<strong>Gonzalo</strong> 💖
+</p>
+
+            </div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="Carla Morrison - Te regalo (letra) - Carla Morrison.mp3" type="audio/mp3">
+       
+    </audio>
+    
+    <div class="music-control" id="musicControl">🎶</div>
+    
+    <div id="particles" class="particles"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const openBtn = document.getElementById('openLetter');
+            const modal = document.getElementById('letterModal');
+            const audio = document.getElementById('backgroundMusic');
+            const closeBtn = document.getElementById('closeBtn');
+            const musicControl = document.getElementById('musicControl');
+            const particlesContainer = document.getElementById('particles');
+
+            // Reproducir música automáticamente al cargar
+            audio.play().catch(e => console.log('Error al reproducir música:', e));
+
+            // Control de pausa/reproducción
+            musicControl.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    musicControl.textContent = '🎶';
+                } else {
+                    audio.pause();
+                    musicControl.textContent = '⏸️';
+                }
+            });
+
+            // Generar partículas con tamaños y velocidades controladas
+            function generateParticles() {
+                const numParticles = 30;
+                for (let i = 0; i < numParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    particlesContainer.appendChild(particle);
+
+                    // Generar tamaño y posición aleatoria
+                    const size = Math.random() * 8 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDuration = `${Math.random() * 3 + 3}s`;
+
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 5000);
+                }
+            }
+
+            // Generar partículas cada 500ms
+            setInterval(generateParticles, 500);
+
+            // Mostrar el modal
+            openBtn.addEventListener('click', () => {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Cerrar el modal
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Cerrar si se hace clic fuera del modal
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
