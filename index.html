@@ -7,215 +7,225 @@
     <title>Feliz Cumpleaños Mi Ángela</title>
     <link rel="stylesheet" href="./css/styles.css" />
     <style>
-        /* Estilo general para el body */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #f7a7c7, #a5d8a5); /* Degradado rosa a verde suave */
-            color: #3a4d2f;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            flex-direction: column;
-        }
+    /* Estilo general para el body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #f7a7c7, #a5d8a5); /* Degradado rosa a verde suave */
+        color: #3a4d2f;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        flex-direction: column;
+    }
 
-        /* Estilo de la tarjeta de cumpleaños */
+    /* Estilo de la tarjeta de cumpleaños */
+    .card {
+        position: relative;
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 400px;
+        max-height: 90vh; /* Limita el alto para pantallas pequeñas */
+        text-align: center;
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    /* Estilos de la cabecera */
+    .header h1, .header h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: #f36f6f;
+    }
+
+    .date {
+        font-size: 1.2rem;
+        color: #f36f6f;
+    }
+
+    /* Estilos para las fotos */
+    .photo-frame {
+        position: relative;
+        display: inline-block;
+        width: 160px;
+        height: 160px;
+        margin-top: 20px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .photo-frame img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .photo-frame img:nth-child(2) {
+        opacity: 0;
+    }
+
+    .photo-frame:hover img:nth-child(1) {
+        opacity: 0;
+    }
+
+    .photo-frame:hover img:nth-child(2) {
+        opacity: 1;
+    }
+
+    /* Estilos del mensaje */
+    .message {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #4a4a4a;
+        line-height: 1.6;
+    }
+
+    .btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #ff7f50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #ff4f00;
+    }
+
+    /* Modal */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal.show {
+        display: flex;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 80%;
+        max-height: 80%;
+        overflow: auto;
+        text-align: center;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #ff4f00;
+    }
+
+    /* Música de fondo */
+    .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        z-index: 1000;
+    }
+
+    .music-control:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Contenedor de partículas */
+    .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Partícula individual */
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.7;
+        background-color: rgba(255, 255, 255, 0.8); /* Blanco suave para las partículas */
+        animation-name: floatUp;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+
+    /* Animación que hace subir las partículas */
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(-100vh);
+            opacity: 0;
+        }
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 600px) {
         .card {
-            position: relative;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
             width: 90%;
-            max-width: 400px;
-            text-align: center;
-            z-index: 2;
+            font-size: 1rem;
         }
 
-        /* Estilos de la cabecera */
-        .header h1, .header h2 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: #f36f6f;
-        }
-
-        .date {
-            font-size: 1.2rem;
-            color: #f36f6f;
-        }
-
-        /* Estilos para las fotos */
         .photo-frame {
-            position: relative;
-            display: inline-block;
-            width: 160px;
-            height: 160px;
-            margin-top: 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 120px;
+            height: 120px;
         }
 
-        /* Aseguramos que las imágenes cubran bien el círculo */
         .photo-frame img {
-            position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        /* Transición para cambiar entre fotos */
-        .photo-frame img:nth-child(2) {
-            opacity: 0;
-        }
-
-        .photo-frame:hover img:nth-child(1) {
-            opacity: 0;
-        }
-
-        .photo-frame:hover img:nth-child(2) {
-            opacity: 1;
-        }
-
-        /* Estilos del mensaje */
-        .message {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #4a4a4a;
-            line-height: 1.6;
         }
 
         .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #ff7f50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #ff4f00;
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
         }
 
-        .modal.show {
-            display: flex;
+        .message {
+            font-size: 1rem; /* Ajustar tamaño de texto */
         }
+    }
+</style>
 
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 80%;
-            max-height: 80%;
-            overflow: auto;
-            text-align: center;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #ff4f00;
-        }
-
-        /* Música de fondo */
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            z-index: 1000;
-        }
-
-        .music-control:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        /* Contenedor de partículas */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Partícula individual */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.7;
-            background-color: rgba(255, 255, 255, 0.8); /* Blanco suave para las partículas */
-            animation-name: floatUp;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-
-        /* Animación que hace subir las partículas */
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-        }
-
-        /* Estilos responsivos */
-        @media (max-width: 600px) {
-            .card {
-                padding: 20px;
-                width: 90%;
-                font-size: 1rem;
-            }
-
-            .photo-frame {
-                width: 120px;
-                height: 120px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="card">
